@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const port = process.env.port || 8080;
-const apiRoutes = require('./api-routes');
+const port = process.env.port || 4000;
+const apiRoutes = require('./routes/api-routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
@@ -18,8 +18,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 //connect to mongoose
-mongoose.connect(`mongodb+srv://khalid:sawatari@cluster0.t4psa.mongodb.net/db_started?retryWrites=true&w=majority`,
-{useNewUrlParser: true});
+mongoose.connect(`mongodb://localhost/server`,
+{useNewUrlParser: true, useUnifiedTopology: true});
 var db = mongoose.connection;
 if (!db) {
     console.log("Not Connected");
