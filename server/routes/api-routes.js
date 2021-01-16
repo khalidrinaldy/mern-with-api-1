@@ -15,7 +15,7 @@ router.route('/data-fruit')
     .get(fruitController.index)
     .post(fruitController.new)
 
-router.route('/data-fruit/:fruit._id')
+router.route('/data-fruit/:_id')
     .get(fruitController.view)
     .put(fruitController.update)
     .delete(fruitController.delete)

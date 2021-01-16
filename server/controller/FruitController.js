@@ -3,80 +3,79 @@ const Fruit = require('../model/FruitModel');
 
 //handle get action
 exports.index = (req,res) => {
-    Fruit.get((error, results) => {
-        if (error) {
-            res.json({
-                status: "error",
-                message: error
-            });
-        } else {
-            res.send(results);
-        }
-        
-    });
+    Fruit.find()
+        .then(data => {
+            res.send(data);
+        })
+        .catch(error => {
+            res.send(error);
+        })
 }
 
 //handle post create action
 exports.new = (req,res) => {
-    var fruit = new Fruit();
-    fruit.name = req.body.name ? req.body.name : fruit.name;
-    fruit.price = req.body.price;
-    fruit.stock = req.body.stock;
-    fruit.save((error) => {
-        if (error) {
-            res.json(error);
-        } else {
-            res.json({
-                message: "data created",
-                data: fruit
-            });
-        }
+    const fruit = new Fruit({
+        name: req.body.name,
+        price: req.body.price,
+        stock: req.body.stock
     });
+    fruit.save()
+        .then(data => {
+            res.json({
+                message: "Data Created",
+                data: data
+            });
+        })
+        .catch(error => {
+            res.send(error);
+        })
 }
 
 //handle get view action
 exports.view = (req,res) => {
-    Fruit.findById(req.params.fruit_id, (error, results) => {
-        if (error) {
-            res.json(error)
-        } else {
-            res.send(results)
-        }
-    });
+    Fruit.findById(req.params._id)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(error => {
+            res.json({
+                message: "Something isnt quiet right"
+            });
+        })
 }
 
 //handle put update action
 exports.update = (req,res) => {
-    Fruit.findById(req.params.fruit_id, (error, results) => {
-        if (error) res.send(error);
-        fruit.name = req.body.name ? req.body.name : fruit.name;
-        fruit.price = req.body.price;
-        fruit.stock = req.body.stock;
-        fruit.save((error) => {
-            if (error) {
-                res.json(error);
-            } else {
-                res.json({
-                    message: "data created",
-                    data: fruit
-                });
-            }
+    Fruit.findByIdAndUpdate(req.params._id, 
+    {
+        name: req.body.name,
+        price: req.body.price,
+        stock: req.body.stock
+    }).then(data => {
+        res.json({
+            message: "Data Updated",
+            data: data
         });
-    });
+    }).catch(error => {
+        res.json({
+            message: "Something isnt quiet right"
+        });
+    })
 }
 
 //handle delete action
 exports.delete = (req,res) => {
-    Fruit.remove({
-        _id: req.params.fruit_id
-    }, (error, results) => {
-        if (error) {
-            res.json(error);
-        } else {
+    Fruit.findByIdAndDelete(req.params._id)
+        .then(data => {
             res.json({
-                message: "Data Deleted"
+                message: "Data Deleted",
+                data: data
             });
-        }
-    });
+        })
+        .catch(error => {
+            res.json({
+                message: "Something isnt quiet right"
+            });
+        })
 }
 
