@@ -5,17 +5,18 @@ const apiRoutes = require('./routes/api-routes');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+//configure body parser to handle post requests
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 app.get('/', (req,res) => {
     res.send("Hello World");
 });
 
 //use api routes
 app.use('/api', apiRoutes);
-
-//configure body parser to handle post requests
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
 
 //connect to mongoose
 mongoose.connect(`mongodb://localhost/server`,
