@@ -22,16 +22,16 @@ exports.new = (req,res) => {
     fruit.name = req.body.name ? req.body.name : fruit.name;
     fruit.price = req.body.price;
     fruit.stock = req.body.stock;
-    fruit.save = (err) => {
-        if (err) {
-            res.json(err);
+    fruit.save((error) => {
+        if (error) {
+            res.json(error);
         } else {
             res.json({
-                message: "New Data Created",
+                message: "data created",
                 data: fruit
             });
         }
-    }
+    });
 }
 
 //handle get view action
@@ -52,16 +52,16 @@ exports.update = (req,res) => {
         fruit.name = req.body.name ? req.body.name : fruit.name;
         fruit.price = req.body.price;
         fruit.stock = req.body.stock;
-        fruit.save = (err) => {
-            if (err) {
-                res.json(err);
+        fruit.save((error) => {
+            if (error) {
+                res.json(error);
             } else {
                 res.json({
-                    message: "Data Updated",
+                    message: "data created",
                     data: fruit
                 });
             }
-        }
+        });
     });
 }
 
